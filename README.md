@@ -14,5 +14,6 @@ RideLink is a fictional ride-sharing platform built as a **backend-only microser
 | 4 | Account Service | Disanayaka D.M.R.H. | IT24103006 | `account-service/` |
 
 
-All members participate in architecture, API-contract, and integration decisions. 
+All members participate in architecture, API-contract, and integration decisions.
+
 ---
