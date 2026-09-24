@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "84c8a2b6-e2a2-4a0b-8df7-71b53e878342",
+		"name": "Fare and Payment Microservice API",
+		"description": "Postman collection for SLIIT IT3130 RideLink Fare & Payment Service (Member 4)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Estimate Fare",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"rideId\": \"ride-1234-uuid\",\n    \"distanceInKm\": 12.5\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/fares/estimate",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"fares",
+						"estimate"
+					]
+				},
+				"description": "Calculates estimated fare (100 LKR base + 50 LKR/km) and stores with PENDING status."
+			},
+			"response": []
+		},
+		{
+			"name": "2. Get Fare By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/fares/:id",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"fares",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "mongo_fare_id_here"
+						}
+					]
+				},
+				"description": "Retrieves fare record by MongoDB ID."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Get Fare By Ride ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/fares/ride/:rideId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"fares",
+						"ride",
+						":rideId"
+					],
+					"variable": [
+						{
+							"key": "rideId",
+							"value": "ride-1234-uuid"
+						}
+					]
+				},
+				"description": "Retrieves fare record by Ride UUID."
+			},
+			"response": []
+		},
+		{
+			"name": "4. Finalize Fare (Payment - PAID with Receipt)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"finalFare\": 725.0,\n    \"paymentStatus\": \"PAID\",\n    \"paymentMethod\": \"CARD\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/fares/:id/finalize",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"fares",
+						":id",
+						"finalize"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "mongo_fare_id_here"
+						}
+					]
+				},
+				"description": "Finalizes fare with final amount, marks as PAID, and generates receipt (RCPT-XXXX)."
+			},
+			"response": []
+		},
+		{
+			"name": "5. Finalize Fare (Payment - FAILED)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"finalFare\": 725.0,\n    \"paymentStatus\": \"FAILED\",\n    \"paymentMethod\": \"CASH\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/fares/:id/finalize",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"fares",
+						":id",
+						"finalize"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "mongo_fare_id_here"
+						}
+					]
+				},
+				"description": "Records payment failure and does not issue a receipt."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8084"
+		}
+	]
+}
