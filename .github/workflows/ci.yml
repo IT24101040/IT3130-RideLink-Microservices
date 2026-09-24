@@ -29,7 +29,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'maven'
+          # Note: Maven dependency caching (cache: 'maven') is deliberately
+          # left off for now. setup-java's cache feature hard-fails the step
+          # if it can't find at least one pom.xml anywhere in the repo, and
+          # main doesn't have any service directories merged into it yet.
+          # Re-add `cache: 'maven'` here once real services land on main.
 
       - name: Check service directory exists
         id: check
