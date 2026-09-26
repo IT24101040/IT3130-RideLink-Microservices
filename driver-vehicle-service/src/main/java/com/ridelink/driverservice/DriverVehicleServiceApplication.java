@@ -15,13 +15,4 @@ public class DriverVehicleServiceApplication {
 		SpringApplication.run(DriverVehicleServiceApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner debugPrint(MongoTemplate mongoTemplate, Environment env) {
-		return args -> {
-			System.out.println(">>> DATABASE_URL property = " + env.getProperty("DATABASE_URL"));
-			System.out.println(">>> spring.data.mongodb.uri property = " + env.getProperty("spring.data.mongodb.uri"));
-			System.out.println(">>> spring.data.mongodb.database property = " + env.getProperty("spring.data.mongodb.database"));
-			System.out.println(">>> Connected to Mongo database: " + mongoTemplate.getDb().getName());
-		};
-	}
 }
